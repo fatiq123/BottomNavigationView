@@ -2,7 +2,9 @@ package com.example.bottomnavigationview
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -46,6 +48,8 @@ class MainActivity : AppCompatActivity() {
         val navigation: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
+        // Add badge to an item
+        addBadgeToItem(navigation, R.id.miMessages, 5)
 
     }
 
@@ -53,5 +57,13 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.flFragment, fragment)
             .commit()
+    }
+
+    private fun addBadgeToItem(navigation: BottomNavigationView, itemId: Int, count: Int) {
+        val badge: BadgeDrawable = navigation.getOrCreateBadge(itemId)
+        badge.number = count
+        badge.badgeTextColor = ContextCompat.getColor(this, android.R.color.white)
+        badge.backgroundColor = ContextCompat.getColor(this, R.color.badge_color)
+        badge.isVisible = true
     }
 }
